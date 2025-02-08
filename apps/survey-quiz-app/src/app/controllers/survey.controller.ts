@@ -31,4 +31,10 @@ export class SurveyController {
     remove(@Param('id') id: string) {
         return this.surveyService.remove(id);
     }
+
+    @Post('batch')
+    createBatch() {
+      return []
+    }
+
 }
