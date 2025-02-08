@@ -1,0 +1,55 @@
+{
+  "name": "survey-quiz-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/survey-quiz-app/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "webpack-cli build",
+        "args": [
+          "node-env=production"
+        ]
+      },
+      "configurations": {
+        "development": {
+          "args": [
+            "node-env=development"
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "buildTarget": "survey-quiz-app:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "survey-quiz-app:build:development"
+        },
+        "production": {
+          "buildTarget": "survey-quiz-app:build:production"
+        }
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    },
+    "docker-build": {
+      "dependsOn": [
+        "build"
+      ],
+      "command": "docker build -f apps/survey-quiz-app/Dockerfile . -t survey-quiz-app"
+    }
+  }
+}
