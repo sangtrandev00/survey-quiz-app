@@ -34,6 +34,10 @@ export class QuestionService {
         return this.questionModel.findByIdAndDelete(id).exec();
     }
 
+  async removeAll(): Promise<any> {
+    return this.questionModel.deleteMany().exec()
+  }
+
     async pagination() {
       return []
     }
